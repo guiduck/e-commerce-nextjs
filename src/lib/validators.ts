@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 export function isValidHttpUrl(str: string): boolean {
   try {
     const url = new URL(str);
