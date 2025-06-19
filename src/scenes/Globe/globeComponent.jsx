@@ -86,15 +86,28 @@ export default function GlobeComponent({ mapData }) {
       shader.fragmentShader = shader.fragmentShader.replace(
         `#include <emissivemap_fragment>`,
         `
-            // Compute edge glow based on view direction and normal (Fresnel)
             vec3 viewDir = normalize(vViewPosition);
             float fresnel = pow(0.8 - dot(viewDir, normal), 2.0);
-            vec3 edgeGlow = vec3(1.0, 0.4, 0.4) * fresnel * 0.3;
-      
-            totalEmissiveRadiance += edgeGlow;
+            vec3 baseEmissive = vec3(0.01, 0.01, 0.01);
+            vec3 edgeGlow = vec3(1.0, 0.45, 0.4) * pow(1.0 - dot(viewDir, normal), 4.0);
+            totalEmissiveRadiance += baseEmissive + edgeGlow * 0.3;
           `
       );
     };
+
+    // mat.onBeforeCompile = (shader) => {
+    //   shader.fragmentShader = shader.fragmentShader.replace(
+    //     `#include <emissivemap_fragment>`,
+    //     `
+    //         // Compute edge glow based on view direction and normal (Fresnel)
+    //         vec3 viewDir = normalize(vViewPosition);
+    //         float fresnel = pow(0.8 - dot(viewDir, normal), 2.0);
+    //         vec3 edgeGlow = vec3(1.0, 0.4, 0.4) * fresnel * 0.3;
+
+    //         totalEmissiveRadiance += edgeGlow;
+    //       `
+    //   );
+    // };
 
     globe.position.set(0, 0, 0);
     globeRef.current = globe;
@@ -123,7 +136,7 @@ export default function GlobeComponent({ mapData }) {
     lastX.current = e.clientX;
     lastY.current = e.clientY;
 
-    const speed = 0.005;
+    const speed = 0.003;
 
     const quaternion = new THREE.Quaternion();
     const axis = new THREE.Vector3();
@@ -138,8 +151,8 @@ export default function GlobeComponent({ mapData }) {
     quaternion.setFromAxisAngle(axis, dy * speed);
     groupRef.current.quaternion.premultiply(quaternion);
 
-    velocityX.current = dx * speed;
-    velocityY.current = dy * speed;
+    velocityX.current = dx * speed * 0.8;
+    velocityY.current = dy * speed * 0.8;
   };
 
   useFrame(() => {
