@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef, useEffect, useState, useMemo } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import * as THREE from "three";
 import ThreeGlobe from "three-globe";
 import countries from "../../../public/files/custom.geo.json";
-import lines from "../../../public/files/lines.json";
+import linesJSON from "../../../public/files/lines.json";
 import map from "../../../public/files/map.json";
 import { useFrame } from "@react-three/fiber";
+import { buildLinesFromLocations } from "@/utils/buildLinesFromLocations";
 
 function parseMapData(inputData) {
   const parsedData = inputData?.map((item) => ({
@@ -20,48 +21,49 @@ function parseMapData(inputData) {
 }
 
 export default function GlobeComponent({ mapData }) {
-  const [globeLoaded, setGlobeLoaded] = useState(false);
+  const groupRef = useRef(null);
   const globeRef = useRef(null);
 
-  const parsedMapData = useMemo(
-    () => parseMapData(mapData) || { type: "Map", maps: [] },
-    [mapData]
-  );
+  const dragging = useRef(false);
+  const lastX = useRef(0);
+  const lastY = useRef(0);
+  const velocityX = useRef(0);
+  const velocityY = useRef(0);
+  const damping = 0.93;
+
+  const parsedMapData = useMemo(() => parseMapData(mapData), [mapData]);
+  const lines = useMemo(() => buildLinesFromLocations(mapData), [mapData]);
 
   useEffect(() => {
-    let globe = new ThreeGlobe({
+    const globe = new ThreeGlobe({
       waitForGlobeReady: true,
       animateIn: true,
     });
+
     globe
       .hexPolygonsData(countries.features)
       .hexPolygonResolution(3)
-      .hexPolygonAltitude(0.01)
-      .hexPolygonMargin(0.4)
+      .hexPolygonAltitude(0.02)
+      .hexPolygonMargin(0.5)
+      .hexPolygonColor(() => "#fff2a8")
       .showAtmosphere(true)
-      .atmosphereColor("purple")
-      .atmosphereAltitude(0.4);
+      .atmosphereColor("#ffae00")
+      .atmosphereAltitude(0.1);
 
-    // setTimeout(() => {
     globe
-      .arcsData(lines.pulls)
-      .arcColor((e) => {
-        return e.status ? "#9cff00" : "#ff4000";
-      })
-      .arcAltitude((e) => {
-        return e.arcAlt;
-      })
-      .arcStroke((e) => {
-        return e.status ? 0.5 : 0.3;
-      })
+      .arcsData(lines.pulls ?? linesJSON.pulls)
+      .arcColor((e) => (e.status ? "#9cff00" : "#ff4000"))
+      .arcAltitude((e) => e.arcAlt)
+      .arcStroke((e) => (e.status ? 0.5 : 0.3))
       .arcDashLength(1.1)
       .arcDashGap(5)
       .arcDashAnimateTime(1000)
       .arcsTransitionDuration(1000)
-      .arcDashInitialGap((e) => e.order * 1)
+      .arcDashInitialGap((e) => e.order * 1);
+
+    globe
       .labelsData(parsedMapData.maps)
       .labelColor(() => "#ff7300")
-
       .labelDotRadius(0.9)
       .labelSize((e) => e.size)
       .labelText("city")
@@ -73,31 +75,104 @@ export default function GlobeComponent({ mapData }) {
       .pointAltitude(0.07)
       .pointRadius(0.08);
 
-    globe.rotateY(-Math.PI * (5 / 9));
-    globe.rotateZ(-Math.PI / 6);
-    globe.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2.4);
-    const globeMaterial = globe.globeMaterial();
-    globeMaterial.color = new THREE.Color(0x3a228a);
-    globeMaterial.emissive = new THREE.Color(0x220038);
-    globeMaterial.emissiveIntensity = 0.1;
-    globeMaterial.shininess = 0.7;
+    const mat = globe.globeMaterial();
+    mat.color = new THREE.Color("#070707");
+    mat.emissive = new THREE.Color("#352434");
+    mat.emissiveIntensity = 0.2;
+    mat.shininess = 8;
+    mat.specular = new THREE.Color("#2b281b");
 
-    globe.position.set(-10, -35, -50);
-    globe.rotation.x = Math.PI / 2;
-    globe.rotation.y = (-1 * Math.PI) / 2;
+    mat.onBeforeCompile = (shader) => {
+      shader.fragmentShader = shader.fragmentShader.replace(
+        `#include <emissivemap_fragment>`,
+        `
+            // Compute edge glow based on view direction and normal (Fresnel)
+            vec3 viewDir = normalize(vViewPosition);
+            float fresnel = pow(0.8 - dot(viewDir, normal), 2.0);
+            vec3 edgeGlow = vec3(1.0, 0.4, 0.4) * fresnel * 0.3;
+      
+            totalEmissiveRadiance += edgeGlow;
+          `
+      );
+    };
 
+    globe.position.set(0, 0, 0);
     globeRef.current = globe;
-    setGlobeLoaded(true);
-    // }, 1000);
+
+    if (groupRef.current) {
+      groupRef.current.add(globe);
+      groupRef.current.rotation.order = "YXZ";
+    }
   }, []);
 
+  const onPointerDown = (e) => {
+    dragging.current = true;
+    lastX.current = e.clientX;
+    lastY.current = e.clientY;
+  };
+
+  const onPointerUp = (e) => {
+    dragging.current = false;
+  };
+
+  const onPointerMove = (e) => {
+    if (!dragging.current || !groupRef.current) return;
+
+    const dx = e.clientX - lastX.current;
+    const dy = e.clientY - lastY.current;
+    lastX.current = e.clientX;
+    lastY.current = e.clientY;
+
+    const speed = 0.005;
+
+    const quaternion = new THREE.Quaternion();
+    const axis = new THREE.Vector3();
+
+    // Rotate around Y
+    axis.set(0, 1, 0);
+    quaternion.setFromAxisAngle(axis, dx * speed);
+    groupRef.current.quaternion.premultiply(quaternion);
+
+    // Rotate around X
+    axis.set(1, 0, 0);
+    quaternion.setFromAxisAngle(axis, dy * speed);
+    groupRef.current.quaternion.premultiply(quaternion);
+
+    velocityX.current = dx * speed;
+    velocityY.current = dy * speed;
+  };
+
   useFrame(() => {
-    if (globeRef.current) {
-      globeRef.current.rotation.z += 0.0002;
-      globeRef.current.rotation.y += 0.0002;
-      globeRef.current.rotation.x += 0.0002;
+    if (!dragging.current && groupRef.current) {
+      const quaternion = new THREE.Quaternion();
+      const axis = new THREE.Vector3();
+
+      // Y inertia
+      axis.set(0, 1, 0);
+      quaternion.setFromAxisAngle(axis, velocityY.current);
+      groupRef.current.quaternion.premultiply(quaternion);
+
+      // X inertia
+      axis.set(1, 0, 0);
+      quaternion.setFromAxisAngle(axis, velocityX.current);
+      groupRef.current.quaternion.premultiply(quaternion);
+
+      velocityX.current *= damping;
+      velocityY.current *= damping;
     }
   });
 
-  return <>{globeLoaded ? <primitive object={globeRef.current} /> : null}</>;
+  return (
+    <group ref={groupRef}>
+      <mesh
+        onPointerDown={onPointerDown}
+        onPointerUp={onPointerUp}
+        onPointerMove={onPointerMove}
+        onPointerLeave={onPointerUp}
+      >
+        <sphereGeometry args={[100, 32, 32]} />
+        <meshBasicMaterial transparent opacity={0} />
+      </mesh>
+    </group>
+  );
 }

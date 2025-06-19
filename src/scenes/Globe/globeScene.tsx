@@ -4,10 +4,10 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { EffectComposer, Bloom, Noise } from "@react-three/postprocessing";
-import { OrbitControls, OrthographicCamera } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import dynamic from "next/dynamic";
 import { LocationsType } from "@/types/locations";
+import { Bloom, EffectComposer } from "@react-three/postprocessing";
 
 const GlobeComponent = dynamic(() => import("./globeComponent"), {
   ssr: false,
@@ -49,52 +49,34 @@ export default function GlobeScene({ mapData }: { mapData: LocationsType[] }) {
   }
 
   return (
-    <Canvas className="w-full h-[600px]" shadows dpr={[1, 2]}>
+    <Canvas
+      camera={{ position: [0, 0, 200], fov: 75 }}
+      className="w-full h-[600px] touch-none"
+      shadows
+      dpr={[1, 2]}
+    >
       {ready && (
         <>
-          <OrthographicCamera
+          {/* <OrthographicCamera
             position={[0, 0, 5700]}
-            zoom={10}
+            zoom={8}
             top={200}
             bottom={-200}
             left={200}
             right={-200}
-          />
-          <EffectComposer>
-            <Bloom luminanceThreshold={0.8} luminanceSmoothing={0.9} />
-            <Noise opacity={0.02} />
-          </EffectComposer>
-          <ambientLight color={0xbbbbbb} intensity={0.5} />
-          <directionalLight color="0xffffff" position={[0, 0, 5]} />
+          /> */}
+          <ambientLight color={"#ffffff"} intensity={0.5} />
           <directionalLight
-            color={0xffffff}
-            position={[-800, 2000, 400]}
-            intensity={0.8}
+            position={[-100, 100, 100]}
+            intensity={2}
+            color="#ffbb55"
           />
-          <directionalLight
-            color="#fabfff"
-            position={[-200, 500, 200]}
-            intensity={1}
-          />
-          <directionalLight
-            color={0x8566cc}
-            position={[-200, 500, 200]}
-            intensity={0.5}
-          />
+          <pointLight position={[0, 0, -200]} intensity={1.8} color="#ffd700" />
           <GlobeComponent mapData={mapData} />
-          <fog attach="fog" args={["#5f002c", 300, 2000]} />
-          <OrbitControls
-            ref={controlsRef}
-            enableZoom
-            enableDamping
-            enablePan
-            minDistance={100}
-            maxDistance={200}
-            rotateSpeed={0.5}
-            zoomSpeed={1}
-            autoRotate={false}
-            minPolarAngle={Math.PI / 6}
-            maxPolarAngle={(3 * Math.PI) / 60}
+          <pointLight
+            position={[-100, -80, -200]}
+            intensity={1.2}
+            color="#fff2a8"
           />
         </>
       )}

@@ -132,5 +132,21 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
+
+    .canvas-wrapper {
+      touch-action: none;
+    }
+
+    .canvas-wrapper::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        circle at center,
+        #2d004d 0%,
+        transparent 70%
+      );
+      z-index: 0;
+    }
   }
 }

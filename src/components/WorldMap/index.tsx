@@ -3,20 +3,18 @@
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { LocationsType } from "@/types/locations";
 import Skeleton from "../ui/skeleton";
+import { useLocationsStore } from "@/stores/useLocationsStore";
 
 const GlobeScene = dynamic(() => import("@/scenes/Globe/globeScene"), {
   ssr: false,
   loading: () => <Skeleton className="w-full h-[576px]" />,
 });
 
-export default function WorldMap({
-  locations,
-}: {
-  locations: LocationsType[];
-}) {
-  if (!locations.length) return null;
+export default function WorldMap() {
+  const { locations } = useLocationsStore();
+
+  if (!locations?.length) return null;
 
   return (
     <div className="grid gap-4 grid-cols-1 h-[600px]">
