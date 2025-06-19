@@ -70,19 +70,19 @@ export function AddProductForm({ onSuccess }: { onSuccess?: () => void }) {
         className="space-y-4 p-4 max-w-md mx-auto"
       >
         <div>
-          <Input placeholder="Title" {...register("title")} />
+          <Input placeholder="Título" {...register("title")} />
           {errors.title && (
             <p className="text-sm text-red-500">{errors.title.message}</p>
           )}
         </div>
         <div>
-          <Input type="number" placeholder="Price" {...register("price")} />
+          <Input type="number" placeholder="Preço" {...register("price")} />
           {errors.price && (
             <p className="text-sm text-red-500">{errors.price.message}</p>
           )}
         </div>
         <div>
-          <Input placeholder="Description" {...register("description")} />
+          <Input placeholder="Descrição" {...register("description")} />
           {errors.description && (
             <p className="text-sm text-red-500">{errors.description.message}</p>
           )}
@@ -97,8 +97,8 @@ export function AddProductForm({ onSuccess }: { onSuccess?: () => void }) {
         <div>
           <Label className="mb-2">Imagem do produto</Label>
           <Input type="file" accept="image/*" {...register("image")} />
-          {errors.image && (
-            <p className="text-sm text-red-500">{errors.image.message}</p>
+          {typeof errors.title?.message === "string" && (
+            <p className="text-sm text-red-500">{errors.title.message}</p>
           )}
         </div>
         <Button type="submit">Salvar</Button>

@@ -84,19 +84,19 @@ export function EditProductForm({ product, onSuccess }: EditProductFormProps) {
         className="space-y-4 p-4 max-w-md mx-auto"
       >
         <div>
-          <Input placeholder="Title" {...register("title")} />
+          <Input placeholder="Título" {...register("title")} />
           {errors.title && (
             <p className="text-sm text-red-500">{errors.title.message}</p>
           )}
         </div>
         <div>
-          <Input type="number" placeholder="Price" {...register("price")} />
+          <Input type="number" placeholder="Preço" {...register("price")} />
           {errors.price && (
             <p className="text-sm text-red-500">{errors.price.message}</p>
           )}
         </div>
         <div>
-          <Input placeholder="Description" {...register("description")} />
+          <Input placeholder="Descrição" {...register("description")} />
           {errors.description && (
             <p className="text-sm text-red-500">{errors.description.message}</p>
           )}

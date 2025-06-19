@@ -51,10 +51,10 @@ export default function LoginPage() {
         onSubmit={handleSubmit(onSubmit)}
         className="mx-auto w-full max-w-sm space-y-4 mb-4"
       >
-        <h1 className="text-2xl font-bold text-center mb-2">Register</h1>
+        <h1 className="text-2xl font-bold text-center mb-2">Registro</h1>
 
         <div className="space-y-1">
-          <Label htmlFor="name">Name</Label>
+          <Label htmlFor="name">Nome</Label>
           <Input id="name" {...register("name")} />
           {errors.name && (
             <p className="text-sm text-red-500">{errors.name.message}</p>
@@ -70,7 +70,7 @@ export default function LoginPage() {
         </div>
 
         <div className="space-y-1">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">Senha</Label>
           <Input id="password" type="password" {...register("password")} />
           {errors.password && (
             <p className="text-sm text-red-500">{errors.password.message}</p>
@@ -94,7 +94,7 @@ export default function LoginPage() {
           >
             <div className="flex items-center gap-2">
               <RadioGroupItem value="customer" id="customer" />
-              <Label htmlFor="customer">Customer</Label>
+              <Label htmlFor="customer">Cliente</Label>
             </div>
             <div className="flex items-center gap-2">
               <RadioGroupItem value="admin" id="admin" disabled />
@@ -104,7 +104,7 @@ export default function LoginPage() {
         </div>
 
         <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? "Creating..." : "Register"}
+          {isSubmitting ? "Registrando..." : "Registrar"}
         </Button>
       </form>
       <p className="text-sm text-muted-foreground text-center">

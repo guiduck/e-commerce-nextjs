@@ -62,13 +62,13 @@ export default function LoginPage() {
         </div>
 
         <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? "Logging in…" : "Login"}
+          {isSubmitting ? "Entrando…" : "Entrar"}
         </Button>
       </form>
       <p className="text-sm text-muted-foreground text-center">
-        Don&apos;t have an account?{" "}
+        Ainda não tem uma conta?{" "}
         <a href="/register" className="underline">
-          Register
+          Criar conta
         </a>
       </p>
     </div>
