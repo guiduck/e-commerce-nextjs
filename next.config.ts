@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
         hostname: "placeimg.com",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "placehold.co",
+        pathname: "**",
+      },
     ],
   },
 };

@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
+import { useMemo } from "react";
 
 const FullScreenMenu = dynamic(() => import("@/components/FullScreenMenu"), {
   ssr: false,
@@ -23,11 +24,13 @@ export function Header() {
     });
   };
 
+  const title = useMemo(() => pathname.split("/")[1], [pathname]);
+
   return (
     <header className="w-full border-b bg-white dark:bg-zinc-950">
-      <div className="flex items-center justify-between px-6 py-4">
+      <div className="flex items-center justify-between px-6 py-4 relative">
         {/* MOBILE */}
-        <div className="block md:hidden">
+        <div className="block md:hidden absolute left-0">
           <Button
             variant="ghost"
             size="sm"
@@ -36,39 +39,39 @@ export function Header() {
             ← Back
           </Button>
         </div>
-        <h1 className="w-full text-center capitalize font-bold">
-          {pathname.split("/")}
+        <h1 className="w-full text-center capitalize font-bold md:hidden">
+          {title}
         </h1>
-        <div className="block md:hidden ml-auto">
+        <div className="block md:hidden ml-auto absolute right-0">
           <FullScreenMenu />
         </div>
 
         {/* DESKTOP*/}
-        <nav className="hidden md:flex w-full gap-6 items-center text-sm font-medium">
+        <nav className="hidden md:flex w-full gap-6 items-center text-sm font-medium md:justify-center relative">
           <Link
-            href="/locations"
+            href="/warehouses"
             className={cn(
               "transition hover:text-primary",
-              pathname === "/locations"
+              pathname === "/warehouses"
                 ? "text-primary font-semibold underline underline-offset-4"
                 : "text-muted-foreground"
             )}
           >
-            Locations
+            Warehouses
           </Link>
           <Link
-            href="/products"
+            href="/produtos"
             className={cn(
               "transition hover:text-primary",
-              pathname === "/products"
+              pathname === "/produtos"
                 ? "text-primary font-semibold underline underline-offset-4"
                 : "text-muted-foreground"
             )}
           >
-            Products
+            Produtos
           </Link>
 
-          <div className=" ml-auto">
+          <div className="ml-auto md:absolute md:right-0">
             <ThemeToggle small />
             <Button
               variant="ghost"

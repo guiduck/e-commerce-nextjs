@@ -4,16 +4,18 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
 import dynamic from "next/dynamic";
 import { LocationsType } from "@/types/locations";
-import { Bloom, EffectComposer } from "@react-three/postprocessing";
 
 const GlobeComponent = dynamic(() => import("./globeComponent"), {
   ssr: false,
 });
 
-export default function GlobeScene({ mapData }: { mapData: LocationsType[] }) {
+interface GlobeSceneProps {
+  mapData: LocationsType[];
+}
+
+export default function GlobeScene({ mapData }: GlobeSceneProps) {
   const [ready, setReady] = useState(false);
   const [webglSupported, setWebglSupported] = useState(true);
   const controlsRef = useRef<any>(null);
@@ -50,8 +52,8 @@ export default function GlobeScene({ mapData }: { mapData: LocationsType[] }) {
 
   return (
     <Canvas
+      className={"w-full h-[600px] touch-none"}
       camera={{ position: [0, 0, 200], fov: 75 }}
-      className="w-full h-[600px] touch-none"
       shadows
       dpr={[1, 2]}
     >

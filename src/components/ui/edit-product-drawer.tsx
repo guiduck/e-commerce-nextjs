@@ -13,32 +13,36 @@ import { Button } from "@/components/ui/button";
 import { Product } from "@/types/products";
 
 interface EditProductDrawerProps {
-  selectedProduct?: Product;
+  product?: Product;
 }
 
-export function EditProductDrawer({ selectedProduct }: EditProductDrawerProps) {
-  const { open, product, toggle, setProduct, close } = useEditProductDrawer();
+export function EditProductDrawer({ product }: EditProductDrawerProps) {
+  const {
+    open,
+    product: selectedProduct,
+    toggle,
+    setProduct,
+    close,
+  } = useEditProductDrawer();
 
-  const isInline = !!selectedProduct;
-  const isOpen = isInline ? open : open && !!product;
-  const activeProduct = isInline ? selectedProduct : product;
+  const isOpen = open && (!!selectedProduct || !!product);
+  const activeProduct = selectedProduct ?? product;
 
   return (
     <Drawer
       open={isOpen}
       onOpenChange={(open) => {
         toggle(open);
-        if (isInline && open) {
-          setProduct(selectedProduct);
+        if (open) {
+          setProduct(activeProduct);
+          return;
         }
+        setProduct(null);
       }}
     >
-      {isInline && (
-        <DrawerTrigger asChild>
-          <Button variant="default">Editar Produto</Button>
-        </DrawerTrigger>
-      )}
-
+      <DrawerTrigger asChild>
+        <Button variant="default">Editar Produto</Button>
+      </DrawerTrigger>
       {activeProduct && (
         <DrawerContent>
           <DrawerHeader>

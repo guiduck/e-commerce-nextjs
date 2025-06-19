@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { updateProduct } from "@/services/products/updateProduct";
 import { CategorySelect } from "@/components/ui/category-select";
+import { Product } from "@/types/products";
 
 const formSchema = z.object({
   title: z.string().min(2),
@@ -23,14 +24,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 interface EditProductFormProps {
-  product: {
-    id: number;
-    title: string;
-    price: number;
-    description: string;
-    categoryId: number;
-    images: string[];
-  };
+  product: Product;
   onSuccess?: () => void;
 }
 

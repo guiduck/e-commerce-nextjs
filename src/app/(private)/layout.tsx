@@ -8,7 +8,7 @@ export default function PrivateLayout({
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <div className="max-w-[1064px] mx-auto">{children}</div>
     </>
   );
 }

@@ -141,12 +141,12 @@ export default function GlobeComponent({ mapData }) {
     const quaternion = new THREE.Quaternion();
     const axis = new THREE.Vector3();
 
-    // Rotate around Y
+    // Rotate Y axis
     axis.set(0, 1, 0);
     quaternion.setFromAxisAngle(axis, dx * speed);
     groupRef.current.quaternion.premultiply(quaternion);
 
-    // Rotate around X
+    // Rotate X axis
     axis.set(1, 0, 0);
     quaternion.setFromAxisAngle(axis, dy * speed);
     groupRef.current.quaternion.premultiply(quaternion);

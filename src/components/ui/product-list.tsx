@@ -7,20 +7,24 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { useEditProductDrawer } from "@/stores/useEditProductDrawer";
+import { useProductsStore } from "@/stores/useProductsStore";
 import { Product } from "@/types/products";
 
 interface ProductListProps {
-  products: Product[];
+  products?: Product[];
   layout?: "grid" | "carousel";
   editMode?: boolean;
 }
 
 export function ProductList({
-  products,
+  products: initialProducts,
   layout = "grid",
   editMode = false,
 }: ProductListProps) {
   const { setProduct, toggle } = useEditProductDrawer();
+  const { filteredProducts } = useProductsStore();
+
+  const products = filteredProducts ?? initialProducts;
 
   const handleEdit = (product: Product) => {
     setProduct(product);

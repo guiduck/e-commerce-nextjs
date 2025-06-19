@@ -47,7 +47,13 @@ export default function LocationsWidget() {
     return (
       <>
         <LocationsTable locations={locations} />
-        <WorldMap />
+        <WorldMap
+          heading="Localizações em tempo real"
+          body="Acompanhe em tempo real os pontos de entrega ao redor do mundo.
+              Nossa rede inteligente garante precisão e agilidade com dados
+              sempre atualizados."
+          footer="Entregas pelo mundo"
+        />
       </>
     );
   };

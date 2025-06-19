@@ -1,90 +1,102 @@
 "use client";
 
-import Link from "next/link";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useProductsStore } from "@/stores/useProductsStore";
 import { cn } from "@/lib/utils";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useMemo } from "react";
 
 interface PaginationProps {
   currentPage: number;
-  hasNextPage: boolean;
 }
 
-export function Pagination({ currentPage, hasNextPage }: PaginationProps) {
+export function Pagination({ currentPage }: PaginationProps) {
   const searchParams = useSearchParams();
+  const { totalPages, setCurrentPage } = useProductsStore();
 
-  const generatePageLink = (page: number) => {
+  const router = useRouter();
+
+  const goToPage = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", page.toString());
-    return `?${params.toString()}`;
+    router.push(`?${params.toString()}`);
+    setCurrentPage(page);
   };
 
-  const pages: (number | string)[] = [];
+  const pages = useMemo(() => {
+    const visible: (number | string)[] = [];
 
-  // Always show first page
-  pages.push(1);
+    visible.push(1);
 
-  // Show ellipsis if currentPage is far from beginning
-  if (currentPage > 3) {
-    pages.push("...");
-  }
+    if (currentPage > 3) {
+      visible.push("...");
+    }
 
-  // Add previous page if it's not 1
-  if (currentPage - 1 > 1) {
-    pages.push(currentPage - 1);
-  }
+    if (currentPage - 1 > 1) {
+      visible.push(currentPage - 1);
+    }
 
-  // Add current page if it's not 1
-  if (currentPage !== 1) {
-    pages.push(currentPage);
-  }
+    if (currentPage !== 1) {
+      visible.push(currentPage);
+    }
 
-  // Add next page if we know one exists
-  if (hasNextPage) {
-    pages.push(currentPage + 1);
-  }
+    if (currentPage < totalPages) {
+      visible.push(currentPage + 1);
+    }
+
+    return visible;
+  }, [currentPage, totalPages]);
+
+  useEffect(() => {
+    setCurrentPage(currentPage);
+  }, []);
 
   return (
     <div className="flex items-center justify-center space-x-2 py-4">
-      <Link
-        href={generatePageLink(currentPage - 1)}
-        aria-disabled={currentPage === 1}
+      <button
+        disabled={currentPage === 1}
+        onClick={() => goToPage(currentPage - 1)}
         className={cn(
-          "px-2 py-1 rounded-full hover:bg-muted transition",
-          currentPage === 1 && "pointer-events-none opacity-50"
+          "px-2 py-1 rounded hover:bg-muted",
+          currentPage === 1 && "opacity-50 cursor-not-allowed"
         )}
       >
         ←
-      </Link>
+      </button>
 
-      {pages.map((page, idx) =>
-        typeof page === "number" ? (
-          <Link
-            key={idx}
-            href={generatePageLink(page)}
+      {pages.map((p, idx) =>
+        typeof p === "number" ? (
+          <button
+            key={`page-${p}`}
+            onClick={() => goToPage(p)}
             className={cn(
               "px-3 py-1 rounded-full text-sm",
-              currentPage === page
+              currentPage === p
                 ? "bg-primary text-white"
                 : "hover:bg-muted text-muted-foreground"
             )}
           >
-            {page}
-          </Link>
+            {p}
+          </button>
         ) : (
-          <span key={idx} className="px-2 text-sm text-muted-foreground">
+          <span
+            key={`ellipsis-${idx * 1}`}
+            className="px-2 text-sm text-muted-foreground"
+          >
             ...
           </span>
         )
       )}
 
-      {hasNextPage && (
-        <Link
-          href={generatePageLink(currentPage + 1)}
-          className="px-2 py-1 rounded-full hover:bg-muted transition"
-        >
-          →
-        </Link>
-      )}
+      <button
+        disabled={currentPage === totalPages}
+        onClick={() => goToPage(currentPage + 1)}
+        className={cn(
+          "px-2 py-1 rounded hover:bg-muted",
+          currentPage === totalPages && "opacity-50 cursor-not-allowed"
+        )}
+      >
+        →
+      </button>
     </div>
   );
 }
