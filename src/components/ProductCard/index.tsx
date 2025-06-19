@@ -1,34 +1,30 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Suspense, useMemo, useTransition } from "react";
+import { Suspense, useTransition } from "react";
 import { deleteProduct } from "@/services/products/deleteProduct";
 import { toast } from "sonner";
-import { isValidHttpUrl } from "@/lib/validators";
 import { Product } from "@/types/products";
 import { Label } from "./label";
 import Link from "next/link";
 import Skeleton from "../ui/skeleton";
+import { SmartImage } from "../ui/smart-img";
 
 interface ProductCardProps {
   product: Product;
   allowEdit?: boolean;
+  allowDelete?: boolean;
   onEdit?: (product: Product) => void;
 }
 
-const FALLBACK_IMAGE = "https://placehold.co/300x300?text=No+Image";
-
-export function ProductCard({ product, allowEdit, onEdit }: ProductCardProps) {
+export function ProductCard({
+  product,
+  allowEdit,
+  onEdit,
+  allowDelete,
+}: ProductCardProps) {
   const [isPending, startTransition] = useTransition();
-  const imgSrc = useMemo(() => {
-    const rawImageUrl = product.images?.[0] || "";
-    const src = isValidHttpUrl(rawImageUrl)
-      ? `/api/images/proxy?url=${encodeURIComponent(rawImageUrl)}`
-      : FALLBACK_IMAGE;
-    return src;
-  }, [product.images]);
 
   const handleDelete = () => {
     startTransition(() => {
@@ -54,16 +50,9 @@ export function ProductCard({ product, allowEdit, onEdit }: ProductCardProps) {
 
       <CardContent className="pointer-events-auto flex flex-col relative ">
         <Suspense fallback={<Skeleton className="w-full h-full" />}>
-          <img
-            src={imgSrc}
+          <SmartImage
+            originalUrl={product.images?.[0] ?? ""}
             alt={product.title}
-            data-loaded="false"
-            className="w-full h-40 object-cover rounded mb-2 transition-opacity duration-300"
-            onLoad={(e) => (e.currentTarget.dataset.loaded = "true")}
-            onError={(e) => {
-              e.currentTarget.src = FALLBACK_IMAGE;
-              e.currentTarget.dataset.loaded = "true";
-            }}
           />
         </Suspense>
         <h2 className="text-lg font-bold h-14 line-clamp-2">{product.title}</h2>
@@ -75,21 +64,21 @@ export function ProductCard({ product, allowEdit, onEdit }: ProductCardProps) {
           <p>${product.price}</p>
         </span>
 
-        {allowEdit && (
-          <div className="flex justify-end gap-2 mt-auto">
-            {onEdit && (
-              <Button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  onEdit(product);
-                }}
-                className="w-auto h-auto py-1 px-2 cursor-pointer"
-              >
-                Edit
-              </Button>
-            )}
+        <div className="flex justify-end gap-2 mt-auto">
+          {allowEdit && onEdit && (
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                onEdit(product);
+              }}
+              className="w-auto h-auto py-1 px-2 cursor-pointer"
+            >
+              Edit
+            </Button>
+          )}
 
+          {allowDelete && (
             <Button
               variant="destructive"
               onClick={(e) => {
@@ -102,8 +91,8 @@ export function ProductCard({ product, allowEdit, onEdit }: ProductCardProps) {
             >
               {isPending ? "Deleting..." : "Delete"}
             </Button>
-          </div>
-        )}
+          )}
+        </div>
       </CardContent>
     </Card>
   );

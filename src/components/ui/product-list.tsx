@@ -14,12 +14,14 @@ interface ProductListProps {
   products?: Product[];
   layout?: "grid" | "carousel";
   editMode?: boolean;
+  deleteMode?: boolean;
 }
 
 export function ProductList({
   products: initialProducts,
   layout = "grid",
   editMode = false,
+  deleteMode = false,
 }: ProductListProps) {
   const { setProduct, toggle } = useEditProductDrawer();
   const { filteredProducts } = useProductsStore();
@@ -48,6 +50,7 @@ export function ProductList({
               <ProductCard
                 product={product}
                 allowEdit={editMode}
+                allowDelete={deleteMode}
                 onEdit={() => handleEdit(product)}
               />
             </CarouselItem>
@@ -64,6 +67,7 @@ export function ProductList({
           key={product.id}
           product={product}
           allowEdit={editMode}
+          allowDelete={deleteMode}
           onEdit={() => handleEdit(product)}
         />
       ))}

@@ -29,7 +29,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
       <div>
         <h2 className="text-xl font-bold mb-4">Productos relacionados</h2>
-        <ProductList products={related} layout="carousel" editMode />
+        <ProductList products={related} layout="carousel" editMode deleteMode />
       </div>
     </div>
   );

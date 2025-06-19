@@ -5,12 +5,9 @@ import { useProductsStore } from "@/stores/useProductsStore";
 import { cn } from "@/lib/utils";
 import { useEffect, useMemo } from "react";
 
-interface PaginationProps {
-  currentPage: number;
-}
-
-export function Pagination({ currentPage }: PaginationProps) {
+export function Pagination() {
   const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get("page") ?? "1");
   const { totalPages, setCurrentPage } = useProductsStore();
 
   const router = useRouter();

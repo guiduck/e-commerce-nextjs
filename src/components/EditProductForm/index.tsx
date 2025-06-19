@@ -35,7 +35,7 @@ export function EditProductForm({ product, onSuccess }: EditProductFormProps) {
       title: product.title,
       price: product.price,
       description: product.description,
-      categoryId: product.categoryId,
+      categoryId: product.category.id,
     },
   });
 

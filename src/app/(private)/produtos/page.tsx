@@ -16,13 +16,7 @@ const AddProductDrawer = dynamicImport(
   }
 );
 
-interface PageProps {
-  searchParams?: { page?: string };
-}
-
-export default async function ProductsPage({ searchParams }: PageProps) {
-  const pageParams = await searchParams;
-  const currentPage = Number(pageParams?.page ?? "1");
+export default async function ProductsPage() {
   const products = await getAllProducts(1000);
 
   return (
@@ -31,9 +25,9 @@ export default async function ProductsPage({ searchParams }: PageProps) {
 
       <ProductsFilter products={products} />
 
-      <ProductList layout="grid" />
+      <ProductList layout="grid" deleteMode />
 
-      <Pagination currentPage={currentPage} />
+      <Pagination />
     </div>
   );
 }

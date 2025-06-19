@@ -139,11 +139,11 @@
     }
 
     img[data-loaded="false"] {
-      @apply animate-pulse bg-muted;
+      @apply animate-pulse bg-muted opacity-50;
     }
 
     img[data-loaded="true"] {
-      @apply opacity-100;
+      @apply opacity-100 transition-opacity duration-300;
     }
 
     .canvas-wrapper::before {
