@@ -1,0 +1,112 @@
+{
+  "type": "Map",
+  "maps": [
+    {
+      "size": 1.0,
+      "country": "India",
+      "city": "Chennai",
+      "lat": "13.089869",
+      "lng": "80.245901"
+    },
+    {
+      "size": 1.0,
+      "country": "United Arab Emirates",
+      "city": "Dubai",
+      "lat": "23.214066",
+      "lng": "53.195262"
+    },
+    {
+      "size": 1.0,
+      "country": "North Africa",
+      "city": "Morocco",
+      "lat": "30.555876",
+      "lng": "-7.044599"
+    },
+    {
+      "size": 1.0,
+      "country": "South Korea",
+      "city": "Incheon",
+      "lat": "37.472222222222",
+      "lng": "126.60833333333"
+    },
+    {
+      "size": 1.0,
+      "country": "Russia",
+      "city": "Krasnoyarsk",
+      "lat": "56.05",
+      "lng": "92.9"
+    },
+    {
+      "size": 1.0,
+      "country": "Russia",
+      "city": "Novosibirsk",
+      "lat": "55.033333333333",
+      "lng": "83"
+    },
+    {
+      "size": 1.0,
+      "country": "Malaysia",
+      "city": "Kuala-Lumpur",
+      "lat": "3.11666666666",
+      "lng": "101.7"
+    },
+    {
+      "size": 1.0,
+      "country": "Singapore",
+      "city": "Singapore",
+      "lat": "1.2916666666667",
+      "lng": "103.85"
+    },
+    {
+      "size": 1.0,
+      "country": "Indonesia",
+      "city": "Denpasar",
+      "lat": "-8.75",
+      "lng": "115.16666666667"
+    },
+    {
+      "size": 1.0,
+      "country": "Thailand",
+      "city": "Bangkok",
+      "lat": "13.9255",
+      "lng": "100.5923"
+    },
+    {
+      "size": 1.0,
+      "country": "Thailand",
+      "city": "",
+      "lat": "13.6900",
+      "lng": "100.7501"
+    },
+    { "size": 1.0, "lat": "40.7128", "lng": "-74.006", "city": "New York" },
+    {
+      "size": 1.0,
+      "lat": "34.0522",
+      "lng": "-118.2437",
+      "city": "Los Angeles"
+    },
+    { "size": 1.0, "lat": "41.8781", "lng": "-87.6298", "city": "Chicago" },
+    { "size": 1.0, "lat": "29.7604", "lng": "-95.3698", "city": "Houston" },
+    { "size": 1.0, "lat": "33.4484", "lng": "-112.074", "city": "Phoenix" },
+    {
+      "size": 1.0,
+      "lat": "37.7749",
+      "lng": "-122.4194",
+      "city": "San Francisco"
+    },
+    { "size": 1.0, "lat": "47.6062", "lng": "-122.3321", "city": "Seattle" },
+    {
+      "size": 1.0,
+      "lat": "39.9526",
+      "lng": "-75.1652",
+      "city": "Philadelphia"
+    },
+    {
+      "size": 1.0,
+      "lat": "38.9072",
+      "lng": "-77.0369",
+      "city": "Washington D.C."
+    },
+    { "size": 1.0, "lat": "25.7617", "lng": "-80.1918", "city": "Miami" }
+  ]
+}
