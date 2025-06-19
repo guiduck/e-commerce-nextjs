@@ -12,7 +12,7 @@ const EditProductDrawer = dynamicImport(
 );
 
 interface ProductPageProps {
-  params: { sku: string };
+  params: Promise<{ sku: string }>;
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
