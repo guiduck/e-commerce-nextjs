@@ -21,6 +21,7 @@ export async function updateProduct({ id, ...data }: UpdateProductPayload) {
 
   if (!result.error) {
     revalidateTag("products");
+    revalidateTag("related");
   }
 
   return result;
