@@ -23,11 +23,7 @@ export function FullScreenMenu() {
     { label: "Products", href: "/products" },
   ];
 
-  const logout = () => {
-    fetch("/api/auth/logout", { method: "POST" }).then(() => {
-      window.location.href = "/login";
-    });
-  };
+  const logout = () => fetch("/api/auth/logout", { method: "POST" });
 
   return (
     <>
@@ -35,6 +31,7 @@ export function FullScreenMenu() {
         onClick={() => setOpen(true)}
         variant="ghost"
         size="sm"
+        aria-label="Menu"
         className="rounded-full text-right justify-end text-xl font-bold px-3 py-2 md:hidden"
       >
         ≡

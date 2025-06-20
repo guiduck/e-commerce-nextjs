@@ -39,7 +39,7 @@ export function ProductCard({
   };
 
   return (
-    <Card className="relative group overflow-hidden">
+    <Card data-testid="product-card" className="relative group overflow-hidden">
       <Link
         href={`/produto/${product.id}`}
         className="absolute h-3/4 w-full z-[1] cursor-default"
@@ -74,7 +74,7 @@ export function ProductCard({
               }}
               className="w-auto h-auto py-1 px-2 cursor-pointer"
             >
-              Edit
+              Editar
             </Button>
           )}
 
@@ -89,7 +89,7 @@ export function ProductCard({
               disabled={isPending}
               className="w-auto h-auto py-1 px-2 cursor-pointer"
             >
-              {isPending ? "Deleting..." : "Delete"}
+              {isPending ? "Deletando..." : "Deletar"}
             </Button>
           )}
         </div>

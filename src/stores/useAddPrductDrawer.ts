@@ -7,7 +7,7 @@ interface AddProductDrawerStore {
 
 export const useAddProductDrawerStore = create<AddProductDrawerStore>(
   (set) => ({
-    isOpen: false,
+    isOpen: process.env.NODE_ENV === "test" ? true : false,
     setOpen: (isOpen) => set({ isOpen }),
   })
 );

@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Warehouse NYC",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "description": "Distribuição regional"
+  },
+  {
+    "name": "Centro SP",
+    "latitude": -23.5505,
+    "longitude": -46.6333,
+    "description": "Armazenamento"
+  }
+]

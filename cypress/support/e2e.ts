@@ -14,4 +14,7 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
+import "./commands";
+import "whatwg-fetch";
+export {};
+Cypress.env("NODE_ENV", "test");

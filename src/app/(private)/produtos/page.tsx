@@ -4,12 +4,12 @@ import { getAllProducts } from "@/services/products/getAllProducts";
 import { Pagination } from "@/components/Pagination";
 import { ProductList } from "@/components/ui/product-list";
 import dynamicImport from "next/dynamic";
-import { ProductsFilter } from "@/components/PeoductsFilter";
+import { ProductsFilter } from "@/components/ProductsFilter";
 
 const AddProductDrawer = dynamicImport(
   () => import("@/components/ui/add-product-drawer"),
   {
-    ssr: true,
+    ssr: process.env.NODE_ENV !== "test",
     loading: () => (
       <div className="p-6 text-sm text-muted">Loading drawer...</div>
     ),

@@ -109,8 +109,15 @@ export function EditProductForm({ product, onSuccess }: EditProductFormProps) {
           )}
         </div>
         <div>
-          <Label className="mb-2">Nova imagem (opcional)</Label>
-          <Input type="file" accept="image/*" {...register("image")} />
+          <Label htmlFor="product-image" className="mb-2">
+            Nova imagem (opcional)
+          </Label>
+          <Input
+            id="product-image"
+            type="file"
+            accept="image/*"
+            {...register("image")}
+          />
         </div>
         <Button type="submit">Atualizar</Button>
       </form>

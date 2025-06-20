@@ -17,7 +17,6 @@ export default function LocationsWidget() {
   const handleSearchLocations = (origin: string) => {
     starttransition(async () => {
       const result = await getLocations({ origin });
-      console.log("result:", result);
 
       if ("error" in result) {
         toast.error(result.errorUserMessage);

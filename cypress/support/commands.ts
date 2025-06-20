@@ -35,3 +35,9 @@
 //     }
 //   }
 // }
+
+// import "./index.d.ts";
+
+Cypress.Commands.add("loginAsUser", () => {
+  cy.setCookie("access_token", "mocked-token");
+});

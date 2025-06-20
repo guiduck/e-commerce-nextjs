@@ -8,6 +8,7 @@ export async function deleteProduct(id: number) {
 
   if (!result.error) {
     revalidateTag("products");
+    revalidateTag("related");
   }
 
   return result;

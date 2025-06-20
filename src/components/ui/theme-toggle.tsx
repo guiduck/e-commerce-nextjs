@@ -17,6 +17,7 @@ export function ThemeToggle({ small = false }: ThemeToggleProps) {
 
   return (
     <Button
+      data-testid="theme-toggle"
       variant="ghost"
       onClick={toggle}
       className={cn(

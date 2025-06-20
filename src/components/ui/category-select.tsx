@@ -33,7 +33,7 @@ export function CategorySelect() {
   return (
     <div className="space-y-1">
       <Select
-        onValueChange={(value) => setValue("categoryId", Number(value))}
+        onValueChange={(value) => setValue("categoryId", Number(value ?? 1))}
         value={selectedCategoryId?.toString()}
       >
         <SelectTrigger>

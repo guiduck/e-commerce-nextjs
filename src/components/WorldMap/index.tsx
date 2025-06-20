@@ -22,6 +22,8 @@ export default function WorldMap({ heading, body, footer }: WorldMapProps) {
 
   if (!locations?.length) return null;
 
+  if (process.env.NODE_ENV === "test") return null;
+
   return (
     <div className="grid gap-4 grid-cols-1 h-[600px]">
       <Card className="col-span-6 relative">

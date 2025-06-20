@@ -27,7 +27,7 @@ export function Header() {
   const title = useMemo(() => pathname.split("/")[1], [pathname]);
 
   return (
-    <header className="w-full border-b bg-white dark:bg-zinc-950">
+    <header className="w-full border-b bg-white dark:bg-zinc-950 ">
       <div className="flex items-center justify-between px-6 py-4 relative">
         {/* MOBILE */}
         <div className="block md:hidden absolute left-0">

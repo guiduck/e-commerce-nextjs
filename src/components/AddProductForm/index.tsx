@@ -59,8 +59,8 @@ export function AddProductForm({ onSuccess }: { onSuccess?: () => void }) {
     }
 
     toast.success("Produto criado com sucesso!");
-    reset();
     onSuccess?.();
+    reset();
   };
 
   return (

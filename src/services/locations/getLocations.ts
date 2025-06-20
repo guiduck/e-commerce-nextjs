@@ -23,7 +23,6 @@ export async function getLocations({
     url: `locations?origin=${origin}&radius=${radius}&size=${size}`,
     method: "GET",
   });
-  console.log("response:", response);
 
   if (response.error || !response.data)
     return createAPIError("Failed to fetch locations.");
