@@ -1,4 +1,4 @@
-const mcokedProducts = [
+export const mockedProducts = [
   {
     id: 11,
     title: "Classic Red Egg Cap",

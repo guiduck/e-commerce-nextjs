@@ -1,5 +1,6 @@
 import API from "@/lib/api";
 import { Product } from "@/types/products";
+import { mockedProducts } from "./mock";
 
 export async function getAllProducts(limit = 10, offset = 0) {
   const response = await API<Product[]>({
@@ -8,7 +9,7 @@ export async function getAllProducts(limit = 10, offset = 0) {
     next: { tags: ["products"] },
   });
 
-  if (process.env.NODE_ENV === "test") return mcokedProducts;
+  if (process.env.NODE_ENV === "test") return mockedProducts;
 
   if (response.error || !response.data) return [];
 
