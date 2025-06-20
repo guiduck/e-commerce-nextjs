@@ -5,16 +5,29 @@ on: [push, pull_request]
 jobs:
   lint-build-test:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-node@v3
         with:
           node-version: 20
-      - run: npm install
-      - run: npm run lint
-      - run: npm run build
-      - run: npm run test
-      - name: Run Cypress tests with test env
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Run unit tests
+        run: npm run test
+
+      - name: Build with mocks for Cypress
+        run: npm run build:test
+        env:
+          IS_CYPRESS: "true"
+
+      - name: Run Cypress E2E tests
         run: npm run cypress:ci
         env:
-          NODE_ENV: test
+          IS_CYPRESS: "true"

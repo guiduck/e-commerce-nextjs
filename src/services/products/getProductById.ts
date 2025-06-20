@@ -4,7 +4,7 @@ import { Product } from "@/types/products";
 import { mockedProducts } from "./mock";
 
 export async function getProductById(id: number) {
-  if (process.env.NODE_ENV === "test") return { data: mockedProducts[0] };
+  if (process.env.IS_CYPRESS === "true") return { data: mockedProducts[0] };
 
   const res = await API<Product>({ url: `products/${id}`, method: "GET" });
 

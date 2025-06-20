@@ -7,7 +7,7 @@ interface AddProductDrawerStore {
 
 export const useAddProductDrawerStore = create<AddProductDrawerStore>(
   (set) => ({
-    isOpen: process.env.NODE_ENV === "test" ? true : false,
+    isOpen: process.env.IS_CYPRESS === "true" ? true : false,
     setOpen: (isOpen) => set({ isOpen }),
   })
 );

@@ -22,7 +22,7 @@ export default function WorldMap({ heading, body, footer }: WorldMapProps) {
 
   if (!locations?.length) return null;
 
-  if (process.env.NODE_ENV === "test") return null;
+  if (process.env.IS_CYPRESS === "true") return null;
 
   return (
     <div className="grid gap-4 grid-cols-1 h-[600px]">
