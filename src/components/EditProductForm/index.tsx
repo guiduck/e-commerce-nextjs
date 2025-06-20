@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { updateProduct } from "@/services/products/updateProduct";
 import { CategorySelect } from "@/components/ui/category-select";
 import { Product } from "@/types/products";
+import { useTransition } from "react";
 
 const formSchema = z.object({
   title: z.string().min(2),
@@ -39,6 +40,8 @@ export function EditProductForm({ product, onSuccess }: EditProductFormProps) {
     },
   });
 
+  const [isPending, startTransition] = useTransition();
+
   const {
     register,
     handleSubmit,
@@ -46,35 +49,37 @@ export function EditProductForm({ product, onSuccess }: EditProductFormProps) {
     reset,
   } = methods;
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
-    let imageUrl = product.images[0];
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    startTransition(async () => {
+      let imageUrl = product.images[0];
 
-    if (data.image instanceof FileList && data.image.length > 0) {
-      const uploaded = await uploadImage(data.image[0]);
-      if (!uploaded) {
-        toast.error("Erro ao fazer upload da imagem.");
+      if (data.image instanceof FileList && data.image.length > 0) {
+        const uploaded = await uploadImage(data.image[0]);
+        if (!uploaded) {
+          toast.error("Erro ao fazer upload da imagem.");
+          return;
+        }
+        imageUrl = uploaded;
+      }
+
+      const result = await updateProduct({
+        id: product.id,
+        title: data.title,
+        price: data.price,
+        description: data.description,
+        categoryId: data.categoryId,
+        images: [imageUrl],
+      });
+
+      if (result.error) {
+        toast.error("Erro ao atualizar produto.");
         return;
       }
-      imageUrl = uploaded;
-    }
 
-    const result = await updateProduct({
-      id: product.id,
-      title: data.title,
-      price: data.price,
-      description: data.description,
-      categoryId: data.categoryId,
-      images: [imageUrl],
+      toast.success("Produto atualizado com sucesso!");
+      reset();
+      onSuccess?.();
     });
-
-    if (result.error) {
-      toast.error("Erro ao atualizar produto.");
-      return;
-    }
-
-    toast.success("Produto atualizado com sucesso!");
-    reset();
-    onSuccess?.();
   };
 
   return (
@@ -119,7 +124,9 @@ export function EditProductForm({ product, onSuccess }: EditProductFormProps) {
             {...register("image")}
           />
         </div>
-        <Button type="submit">Atualizar</Button>
+        <Button type="submit">
+          {isPending ? "Atualizando..." : "Atualizar"}
+        </Button>
       </form>
     </FormProvider>
   );

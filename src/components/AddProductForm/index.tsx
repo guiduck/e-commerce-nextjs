@@ -11,6 +11,7 @@ import { uploadImage } from "@/services/files/uploadImage";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { CategorySelect } from "../ui/category-select";
+import { useTransition } from "react";
 
 const formSchema = z.object({
   title: z.string().min(2),
@@ -28,6 +29,7 @@ export function AddProductForm({ onSuccess }: { onSuccess?: () => void }) {
   const methods = useForm<FormData>({
     resolver: zodResolver(formSchema),
   });
+  const [isPending, startTransition] = useTransition();
 
   const {
     register,
@@ -36,31 +38,33 @@ export function AddProductForm({ onSuccess }: { onSuccess?: () => void }) {
     reset,
   } = methods;
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
-    const file = data.image[0];
-    const uploadedUrl = await uploadImage(file);
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    startTransition(async () => {
+      const file = data.image[0];
+      const uploadedUrl = await uploadImage(file);
 
-    if (!uploadedUrl) {
-      toast.error("Falha no upload da imagem. Verifique o arquivo.");
-      return;
-    }
+      if (!uploadedUrl) {
+        toast.error("Falha no upload da imagem. Verifique o arquivo.");
+        return;
+      }
 
-    const result = await addProduct({
-      title: data.title,
-      price: data.price,
-      description: data.description,
-      categoryId: data.categoryId,
-      images: [uploadedUrl],
+      const result = await addProduct({
+        title: data.title,
+        price: data.price,
+        description: data.description,
+        categoryId: data.categoryId,
+        images: [uploadedUrl],
+      });
+
+      if (result.error) {
+        toast.error("Erro ao criar produto.");
+        return;
+      }
+
+      toast.success("Produto criado com sucesso!");
+      onSuccess?.();
+      reset();
     });
-
-    if (result.error) {
-      toast.error("Erro ao criar produto.");
-      return;
-    }
-
-    toast.success("Produto criado com sucesso!");
-    onSuccess?.();
-    reset();
   };
 
   return (
@@ -101,7 +105,7 @@ export function AddProductForm({ onSuccess }: { onSuccess?: () => void }) {
             <p className="text-sm text-red-500">{errors.title.message}</p>
           )}
         </div>
-        <Button type="submit">Salvar</Button>
+        <Button type="submit">{isPending ? "Salvando..." : "Salvar"}</Button>
       </form>
     </FormProvider>
   );
