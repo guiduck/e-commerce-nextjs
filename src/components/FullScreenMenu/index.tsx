@@ -19,8 +19,8 @@ export function FullScreenMenu() {
   const close = () => setOpen(false);
 
   const navItems = [
-    { label: "Locations", href: "/locations" },
-    { label: "Products", href: "/products" },
+    { label: "Warehouses", href: "/warehouses" },
+    { label: "Produtos", href: "/produtos" },
   ];
 
   const logout = () => fetch("/api/auth/logout", { method: "POST" });
