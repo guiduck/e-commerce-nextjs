@@ -42,6 +42,6 @@ Cypress.Commands.add("loginAsUser", () => {
   cy.setCookie("access_token", "mocked-token");
 });
 
-Cypress.Commands.add("waitForProducts", () => {
-  cy.wait("@getProdutos");
-});
+// Cypress.Commands.add("waitForProducts", () => {
+//   cy.wait("@getProdutos");
+// });

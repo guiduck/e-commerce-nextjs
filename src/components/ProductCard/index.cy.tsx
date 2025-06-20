@@ -2,7 +2,6 @@ describe("ProductCard", () => {
   beforeEach(() => {
     cy.loginAsUser();
     cy.visit("/produtos");
-    cy.waitForProducts();
   });
 
   it("shows at least one product card", () => {

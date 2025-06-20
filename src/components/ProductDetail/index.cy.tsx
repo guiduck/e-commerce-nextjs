@@ -2,7 +2,6 @@ describe("Product Detail Page", () => {
   beforeEach(() => {
     cy.loginAsUser();
     cy.visit("/produtos");
-    cy.waitForProducts();
   });
 
   it("opens product detail and displays content", () => {

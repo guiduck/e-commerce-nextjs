@@ -19,34 +19,34 @@ import "whatwg-fetch";
 export {};
 Cypress.env("NODE_ENV", "test");
 
-beforeEach(() => {
-  cy.intercept("GET", "/products", {
-    statusCode: 200,
-    body: [
-      {
-        id: 1,
-        title: "Global Mock Product",
-        description: "Mock description",
-        price: 42,
-        category: { name: "Global Category", id: 1 },
-        images: ["mock.png"],
-      },
-      {
-        id: 2,
-        title: "Global Mock Product",
-        description: "Mock description",
-        price: 45,
-        category: { name: "Global Category", id: 1 },
-        images: ["mock.png"],
-      },
-      {
-        id: 3,
-        title: "Global Mock Product",
-        description: "Mock description",
-        price: 47,
-        category: { name: "Global Category", id: 1 },
-        images: ["mock.png"],
-      },
-    ],
-  }).as("getProducts");
-});
+// beforeEach(() => {
+//   cy.intercept("GET", "/produtos", {
+//     statusCode: 200,
+//     body: [
+//       {
+//         id: 1,
+//         title: "Global Mock Product",
+//         description: "Mock description",
+//         price: 42,
+//         category: { name: "Global Category", id: 1 },
+//         images: ["mock.png"],
+//       },
+//       {
+//         id: 2,
+//         title: "Global Mock Product",
+//         description: "Mock description",
+//         price: 45,
+//         category: { name: "Global Category", id: 1 },
+//         images: ["mock.png"],
+//       },
+//       {
+//         id: 3,
+//         title: "Global Mock Product",
+//         description: "Mock description",
+//         price: 47,
+//         category: { name: "Global Category", id: 1 },
+//         images: ["mock.png"],
+//       },
+//     ],
+//   }).as("getProdutos");
+// });

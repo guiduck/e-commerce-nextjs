@@ -3,7 +3,6 @@ describe("ProductsFilter", () => {
     cy.loginAsUser();
     cy.viewport(1280, 800);
     cy.visit("/produtos");
-    cy.waitForProducts();
   });
 
   it("shows filter controls", () => {

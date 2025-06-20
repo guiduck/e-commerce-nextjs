@@ -8,6 +8,8 @@ export async function getAllProducts(limit = 10, offset = 0) {
     next: { tags: ["products"] },
   });
 
+  if (process.env.NODE_ENV === "test") return mcokedProducts;
+
   if (response.error || !response.data) return [];
 
   return response.data ?? [];

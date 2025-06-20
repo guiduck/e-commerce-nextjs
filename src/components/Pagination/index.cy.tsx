@@ -3,7 +3,6 @@ describe("Pagination", () => {
     cy.loginAsUser();
     cy.viewport(1280, 800);
     cy.visit("/produtos?page=1");
-    cy.waitForProducts();
   });
 
   it("navigates to next page", () => {

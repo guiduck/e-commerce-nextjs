@@ -2,6 +2,9 @@
 import { defineConfig } from "cypress";
 
 export default defineConfig({
+  env: {
+    NODE_ENV: "test",
+  },
   e2e: {
     baseUrl: "http://localhost:3000",
     supportFile: "cypress/support/e2e.ts",

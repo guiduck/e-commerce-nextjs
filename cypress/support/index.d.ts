@@ -5,6 +5,6 @@
 declare namespace Cypress {
   interface Chainable {
     loginAsUser(): Chainable<void>;
-    waitForProducts(): Chainable<void>;
+    // waitForProducts(): Chainable<void>;
   }
 }
