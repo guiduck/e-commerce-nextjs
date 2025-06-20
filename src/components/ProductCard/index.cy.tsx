@@ -1,21 +1,8 @@
 describe("ProductCard", () => {
   beforeEach(() => {
     cy.loginAsUser();
-    cy.intercept("GET", "/products", {
-      statusCode: 200,
-      body: [
-        {
-          id: 1,
-          title: "Mock Product",
-          description: "Desc",
-          price: 20,
-          category: { name: "Mock Category", id: 1 },
-          images: ["mock.png"],
-        },
-      ],
-    }).as("getProdutos");
-
     cy.visit("/produtos");
+    cy.waitForProducts();
   });
 
   it("shows at least one product card", () => {
