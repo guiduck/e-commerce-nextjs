@@ -3,6 +3,11 @@ import { fileURLToPath } from "url";
 import js from "@eslint/js";
 import { FlatCompat } from "@eslint/eslintrc";
 import { fixupConfigRules, fixupPluginRules } from "@eslint/compat";
+import tsParser from "@typescript-eslint/parser";
+import typescriptEslint from "@typescript-eslint/eslint-plugin";
+import prettier from "eslint-plugin-prettier";
+import _import from "eslint-plugin-import";
+import jsxA11Y from "eslint-plugin-jsx-a11y";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
