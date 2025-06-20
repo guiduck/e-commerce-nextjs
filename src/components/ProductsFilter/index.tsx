@@ -16,7 +16,7 @@ type Props = {
   products: Product[];
 };
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 9;
 
 export function ProductsFilter({ products }: Props) {
   const {

@@ -13,7 +13,7 @@ export function ProductDetail({ product }: { product: Product | null }) {
 
   return (
     <Card className="p-4 space-y-4 border rounded">
-      <h1 className="text-2xl font-bold">{product.title}</h1>
+      <p className="text-2xl font-bold">{product.title}</p>
 
       <SmartImage originalUrl={product.images?.[0] ?? ""} alt={product.title} />
 

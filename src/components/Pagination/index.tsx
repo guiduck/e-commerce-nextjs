@@ -8,7 +8,7 @@ import { useEffect, useMemo } from "react";
 export function Pagination() {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page") ?? "1");
-  const { totalPages, setCurrentPage } = useProductsStore();
+  const { totalPages, setCurrentPage, filteredProducts } = useProductsStore();
 
   const router = useRouter();
 
@@ -45,7 +45,7 @@ export function Pagination() {
 
   useEffect(() => {
     setCurrentPage(currentPage);
-  }, []);
+  }, [filteredProducts]);
 
   return (
     <div className="flex items-center justify-center space-x-2 py-4">

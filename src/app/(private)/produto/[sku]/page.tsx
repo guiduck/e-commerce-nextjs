@@ -28,7 +28,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <ProductDetail product={product.data} />
 
       <div>
-        <h2 className="text-xl font-bold mb-4">Productos relacionados</h2>
+        <h2 className="text-xl font-bold mb-4">Produtos relacionados</h2>
         <ProductList products={related} layout="carousel" editMode deleteMode />
       </div>
     </div>
