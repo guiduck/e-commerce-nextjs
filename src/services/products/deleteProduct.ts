@@ -9,6 +9,7 @@ export async function deleteProduct(id: number) {
   if (!result.error) {
     revalidateTag("products");
     revalidateTag("related");
+    revalidateTag("produto");
   }
 
   return result;
