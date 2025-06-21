@@ -152,10 +152,3 @@ Use the category filter, price range selector, and search bar to interact with t
 ## License
 
 This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
-
-```
-
----
-
-Let me know if you'd like this saved as a downloadable `.md` file or want it formatted for publishing (e.g., GitHub, Docs site).
-```
