@@ -148,7 +148,3 @@ Use the category filter, price range selector, and search bar to interact with t
 * 🌐 **Internationalization (i18n)**
 * 🧠 **WebGL Enhancements**: Shader integration and advanced globe interactions
 * 🖼️ **Image Lazy Loading**: Optimize image delivery for faster load times
-
-## License
-
-This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
