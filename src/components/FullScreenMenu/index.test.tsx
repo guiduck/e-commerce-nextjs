@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import FullScreenMenu from "@/components/FullScreenMenu";
 
 jest.mock("next/navigation", () => ({
-  usePathname: () => "/products",
+  usePathname: () => "/produtos",
 }));
 
 jest.mock("@/components/ui/theme-toggle", () => ({
@@ -25,8 +25,8 @@ describe("FullScreenMenu", () => {
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
 
     expect(screen.getByText("Menu")).toBeInTheDocument();
-    expect(screen.getByText("Locations")).toBeInTheDocument();
-    expect(screen.getByText("Products")).toBeInTheDocument();
+    expect(screen.getByText("Warehouses")).toBeInTheDocument();
+    expect(screen.getByText("Produtos")).toBeInTheDocument();
     expect(screen.getByText("Logout")).toBeInTheDocument();
   });
 
