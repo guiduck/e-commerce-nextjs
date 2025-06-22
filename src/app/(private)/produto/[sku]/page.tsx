@@ -4,7 +4,6 @@ import { getProductById } from "@/services/products/getProductById";
 import { getRelatedProducts } from "@/services/products/getRelatedProducts";
 import { ProductList } from "@/components/ui/product-list";
 import dynamicImport from "next/dynamic";
-import { Suspense } from "react";
 import ProductDetail from "@/components/ProductDetail";
 
 const EditProductDrawer = dynamicImport(
@@ -26,9 +25,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     <div className="p-6 space-y-8">
       <EditProductDrawer product={product.data!} />
 
-      <Suspense>
-        <ProductDetail product={product.data} />
-      </Suspense>
+      <ProductDetail product={product.data} />
 
       <div>
         <h2 className="text-xl font-bold mb-4">Produtos relacionados</h2>

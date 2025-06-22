@@ -1,22 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card";
-
-function ProductCardSkeleton() {
-  return (
-    <Card className="animate-pulse">
-      <CardContent className="flex flex-col gap-4">
-        <div className="w-full h-40 bg-muted rounded" />
-        <div className="h-6 bg-muted rounded w-3/4" />
-        <div className="h-4 bg-muted rounded w-full" />
-        <div className="h-4 bg-muted rounded w-5/6" />
-        <div className="h-8 bg-muted rounded w-1/2 mt-4" />
-        <div className="flex gap-2 mt-auto">
-          <div className="h-10 bg-muted rounded w-full" />
-          <div className="h-10 bg-muted rounded w-full" />
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
+import ProductCardSkeleton from "@/components/ProductCard/skeleton";
 
 export default function LoadingProductsPage() {
   return (
