@@ -3,7 +3,10 @@ import { Product } from "@/types/products";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import Skeleton from "../ui/skeleton";
-const SmartImage = dynamic(() => import("../ui/smart-img"), { ssr: true });
+
+const SmartImage = dynamic(() => import("../ui/smart-img"), {
+  ssr: true,
+});
 
 export function ProductDetail({ product }: { product: Product | null }) {
   if (!product) {
@@ -17,6 +20,7 @@ export function ProductDetail({ product }: { product: Product | null }) {
   return (
     <Card className="p-4 space-y-4 border rounded">
       <p className="text-2xl font-bold">{product.title}</p>
+
       <Suspense fallback={<Skeleton />}>
         <SmartImage
           key={product.images?.[0] ?? "no-img"}

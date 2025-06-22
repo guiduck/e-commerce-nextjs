@@ -33,6 +33,7 @@ export function SmartImage({
 
       {proxiedSrc && (
         <img
+          data-testid="smart-img"
           src={error ? fallback : proxiedSrc}
           alt={alt}
           loading="lazy"

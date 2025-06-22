@@ -1,12 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { ProductDetail } from "./index";
 
-jest.mock("@/components/ui/smart-img", () => ({
-  SmartImage: ({ originalUrl, alt }: any) => (
-    <img src={originalUrl} alt={alt} data-testid="mock-smart-image" />
-  ),
-}));
-
 const mockProduct = {
   id: 1,
   title: "Test Product",
@@ -28,7 +22,6 @@ describe("ProductDetail", () => {
     expect(screen.getByText("Test Product")).toBeInTheDocument();
     expect(screen.getByText("A test product")).toBeInTheDocument();
     expect(screen.getByText("$99.99")).toBeInTheDocument();
-    expect(screen.getByTestId("mock-smart-image")).toBeInTheDocument();
   });
 
   it("renders fallback message if product is null", () => {

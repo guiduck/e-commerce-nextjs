@@ -7,7 +7,9 @@ describe("Header (Mobile)", () => {
 
   it("opens mobile menu and sees Products", () => {
     cy.get('[aria-label="Menu"]').click();
-    cy.contains("nav", "Products").should("be.visible");
+    cy.get('[data-testid="mobile-menu"]')
+      .contains("Produtos")
+      .should("be.visible");
   });
 
   it("toggles theme", () => {

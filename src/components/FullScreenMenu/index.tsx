@@ -40,6 +40,7 @@ export function FullScreenMenu() {
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTitle />
         <SheetContent
+          data-testid="mobile-menu"
           side="left"
           className={cn(
             "w-full h-full flex flex-col justify-between",
