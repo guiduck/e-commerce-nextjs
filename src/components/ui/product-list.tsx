@@ -26,7 +26,9 @@ export function ProductList({
   const { setProduct, toggle } = useEditProductDrawer();
   const { filteredProducts } = useProductsStore();
 
-  const products = filteredProducts ?? initialProducts;
+  const products = !filteredProducts.length
+    ? initialProducts
+    : filteredProducts;
 
   const handleEdit = (product: Product) => {
     setProduct(product);

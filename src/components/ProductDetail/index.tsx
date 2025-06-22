@@ -1,6 +1,9 @@
 import { Card } from "@/components/ui/card";
 import { Product } from "@/types/products";
-import { SmartImage } from "../ui/smart-img";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+import Skeleton from "../ui/skeleton";
+const SmartImage = dynamic(() => import("../ui/smart-img"), { ssr: true });
 
 export function ProductDetail({ product }: { product: Product | null }) {
   if (!product) {
@@ -14,8 +17,13 @@ export function ProductDetail({ product }: { product: Product | null }) {
   return (
     <Card className="p-4 space-y-4 border rounded">
       <p className="text-2xl font-bold">{product.title}</p>
-
-      <SmartImage originalUrl={product.images?.[0] ?? ""} alt={product.title} />
+      <Suspense fallback={<Skeleton />}>
+        <SmartImage
+          key={product.images?.[0] ?? "no-img"}
+          originalUrl={product.images?.[0] ?? ""}
+          alt={product.title}
+        />
+      </Suspense>
 
       <p>{product.description}</p>
 
@@ -25,3 +33,5 @@ export function ProductDetail({ product }: { product: Product | null }) {
     </Card>
   );
 }
+
+export default ProductDetail;

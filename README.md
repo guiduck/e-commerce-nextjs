@@ -37,14 +37,20 @@ Visit the live demo here:
 ## Project Structure
 
 - `src/app` – Next.js app router structure
+- `src/actions` – server-side actions
 - `src/components` – Reusable components
 - `src/components/ui` – Shadcn UI primitives
+- `src/components/**.test.tsx` – Unit tests with Jest
+- `src/components/**.cy.tsx` – Cypress E2E tests
 - `src/lib` – Utilities and constants
+- `src/types` – Typescript reusable models
+- `src/stores` – Zustand stores for state management
+- `src/lib/api` – fetch API wrapper
 - `src/services` – API service functions
 - `src/scenes/Globe` – Real-time animated 3D world map using React Three Fiber
-- `src/styles` – TailwindCSS styles
-- `__tests__` – Unit tests with Jest
-- `e2e` – Cypress E2E tests
+- `src/app/(public)` – Public pages
+- `src/app/(private)` – Authenticated pages
+- `src/meddleware` – Authentication middleware
 - `.github/workflows/ci.yml` – CI pipeline configuration
 
 ## Features
@@ -56,6 +62,7 @@ Visit the live demo here:
 - 📄 **Pagination**: Efficient handling of product listings.
 - 💡 **Clean Modular Architecture**: Easily maintainable codebase with a focus on separation of concerns.
 - 🧪 **Full Testing Coverage**: Supports both unit and E2E testing.
+- 🖼️ **Image Lazy Loading**: Optimized image delivery for faster load times.
 
 ## Getting Started
 
@@ -65,7 +72,7 @@ Visit the live demo here:
 git clone https://github.com/your-username/aiva-ecommerce.git
 cd aiva-ecommerce
 npm install
-````
+```
 
 ### Environment Variables
 
@@ -77,16 +84,16 @@ NEXT_PUBLIC_API_BASE_URL=https://api.escuelajs.co/api/v1
 
 ## Tech Stack
 
-* **Framework**: [Next.js 14](https://nextjs.org/)
-* **Language**: [TypeScript](https://www.typescriptlang.org/)
-* **Styling**: [TailwindCSS](https://tailwindcss.com/), [Shadcn UI](https://ui.shadcn.com/)
-* **3D & Animation**: [Three.js](https://threejs.org/), [React Three Fiber](https://docs.pmnd.rs/react-three-fiber)
-* **State Management**: [Zustand](https://github.com/pmndrs/zustand)
-* **API Client**: [Axios](https://axios-http.com/)
-* **Forms**: [React Hook Form](https://react-hook-form.com/)
-* **Icons**: [Lucide React](https://lucide.dev/)
-* **Testing**: [Jest](https://jestjs.io/), [Cypress](https://www.cypress.io/)
-* **Deployment**: [Vercel](https://vercel.com/)
+- **Framework**: [Next.js 14](https://nextjs.org/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [TailwindCSS](https://tailwindcss.com/), [Shadcn UI](https://ui.shadcn.com/)
+- **3D & Animation**: [Three.js](https://threejs.org/), [React Three Fiber](https://docs.pmnd.rs/react-three-fiber)
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **API Client**: [Axios](https://axios-http.com/)
+- **Forms**: [React Hook Form](https://react-hook-form.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Testing**: [Jest](https://jestjs.io/), [Cypress](https://www.cypress.io/)
+- **Deployment**: [Vercel](https://vercel.com/)
 
 ## API Documentation
 
@@ -94,9 +101,9 @@ Data is sourced from the public [Platzi Fake Store API](https://api.escuelajs.co
 
 ### Example Endpoints
 
-* `GET /products` – Fetch all products
-* `GET /categories` – List all product categories
-* `GET /users` – Example users
+- `GET /products` – Fetch all products
+- `GET /categories` – List all product categories
+- `GET /users` – Example users
 
 > 🛑 Authentication is **not required**. The API is public and no JWT or session is used.
 
@@ -126,10 +133,10 @@ npm run cypress:run
 
 CI is configured via GitHub Actions in `.github/workflows/ci.yml`.
 
-* Linting
-* Type checking
-* Unit + E2E tests
-* Build verification
+- Linting
+- Type checking
+- Unit + E2E tests
+- Build verification
 
 ## Usage
 
@@ -145,6 +152,5 @@ Use the category filter, price range selector, and search bar to interact with t
 
 ## Future Improvements
 
-* 🌐 **Internationalization (i18n)**
-* 🧠 **WebGL Enhancements**: Shader integration and advanced globe interactions
-* 🖼️ **Image Lazy Loading**: Optimize image delivery for faster load times
+- 🌐 **Internationalization (i18n)**
+- 🧠 **WebGL Enhancements**: Shader integration and advanced globe interactions

@@ -6,5 +6,6 @@ export async function getRelatedProducts(id: number) {
     method: "GET",
     next: { tags: ["related"], revalidate: 60 * 15 },
   });
+
   return response.data ?? [];
 }
